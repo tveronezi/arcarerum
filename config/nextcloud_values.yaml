@@ -1,0 +1,83 @@
+ingress:
+  enabled: true
+
+phpClientHttpsFix:
+  enabled: true
+  protocol: https
+
+nextcloud:
+  host: intra.localhost
+  extraInitContainers:
+    - name: update-directories-permissions
+      image: ubuntu
+      command: ['sh', '-c']
+      args:
+        - >
+          mkdir -p /var/www/html/config ;
+          mkdir -p /var/www/html/themes ;
+          mkdir -p /var/www/html/custom_apps ;
+          mkdir -p /var/www/html/data ;
+          mkdir -p /var/www/root/tmp ;
+          mkdir -p /var/www/root/html ;
+          chown -R 33 /var/www/ && chmod -R u+w /var/www/
+
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-secrets
+    usernameKey: nextcloud-username
+    passwordKey: nextcloud-password
+    tokenKey: nextcloud-token
+
+  securityContext:
+    runAsUser: 33
+    runAsGroup: 33
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+
+  podSecurityContext:
+    runAsUser: 33
+    runAsGroup: 33
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+
+internalDatabase:
+  enabled: true
+  name: nextcloud
+
+##
+## External database configuration
+##
+externalDatabase:
+  enabled: false
+
+  ## Supported database engines: mysql or postgresql
+  type: mysql
+
+  ## Database host
+  host:
+
+  ## Database user
+  user: nextcloud
+
+  ## Database password
+  password: ""
+
+  ## Database name
+  database: nextcloud
+
+  ## Use a existing secret
+  existingSecret:
+    enabled: false
+    # secretName: nameofsecret
+    usernameKey: db-username
+    passwordKey: db-password
+    # hostKey: db-hostname-or-ip
+    # databaseKey: db-name
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  # Nextcloud Data (/var/www/html)
+  enabled: true
+  existingClaim: "nextcloud-pvc"

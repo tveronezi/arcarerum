@@ -4,8 +4,8 @@ auth:
   existingSecret: "nextcloud-mariadb-secrets"
 
 primary:
-  containerSecurityContext:
-    # your user id so you can write data to the `volume/nextcloud-mariadb` directory
-    runAsUser: 1000
   persistence:
     existingClaim: "nextcloud-mariadb-pvc"
+
+volumePermissions:
+  enabled: true

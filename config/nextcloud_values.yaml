@@ -1,25 +1,13 @@
 ingress:
-  enabled: true
+  enabled: false
 
 phpClientHttpsFix:
   enabled: true
   protocol: https
 
+
 nextcloud:
-  host: intra.localhost
-  extraInitContainers:
-    - name: update-directories-permissions
-      image: ubuntu
-      command: ['sh', '-c']
-      args:
-        - >
-          mkdir -p /var/www/html/config ;
-          mkdir -p /var/www/html/themes ;
-          mkdir -p /var/www/html/custom_apps ;
-          mkdir -p /var/www/html/data ;
-          mkdir -p /var/www/root/tmp ;
-          mkdir -p /var/www/root/html ;
-          chown -R 33 /var/www/ && chmod -R u+w /var/www/
+  host: intra.veronezi.link
 
   existingSecret:
     enabled: true
@@ -27,18 +15,6 @@ nextcloud:
     usernameKey: nextcloud-username
     passwordKey: nextcloud-password
     tokenKey: nextcloud-token
-
-  securityContext:
-    runAsUser: 33
-    runAsGroup: 33
-    runAsNonRoot: true
-    readOnlyRootFilesystem: false
-
-  podSecurityContext:
-    runAsUser: 33
-    runAsGroup: 33
-    runAsNonRoot: true
-    readOnlyRootFilesystem: false
 
 internalDatabase:
   enabled: true

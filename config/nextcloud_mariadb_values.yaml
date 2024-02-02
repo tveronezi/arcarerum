@@ -1,0 +1,11 @@
+auth:
+  ## @param auth.existingSecret Use existing secret for password details (`auth.rootPassword`, `auth.password`, `auth.replicationPassword` will be ignored and picked up from this secret). The secret has to contain the keys `mariadb-root-password`, `mariadb-replication-password` and `mariadb-password`
+  ##
+  existingSecret: "nextcloud-mariadb-secrets"
+
+primary:
+  containerSecurityContext:
+    # your user id so you can write data to the `volume/nextcloud-mariadb` directory
+    runAsUser: 1000
+  persistence:
+    existingClaim: "nextcloud-mariadb-pvc"

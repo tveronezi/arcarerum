@@ -8,6 +8,10 @@ on:
 jobs:
   deploy-and-wait:
     runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
     - uses: actions/checkout@v4
     - uses: azure/setup-kubectl@v3

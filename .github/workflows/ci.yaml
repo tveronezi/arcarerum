@@ -45,5 +45,8 @@ jobs:
 
     - run: ./scripts/_status.sh
     - run: ./scripts/_status_all.sh
+
     - run: ./scripts/_undeploy_nextcloud_mariadb.sh
+    - run: ./scripts/_undeploy_nextcloud.sh
+    
     - run: ./_kill_cluster.sh

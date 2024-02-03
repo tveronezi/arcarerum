@@ -1,0 +1,41 @@
+name: test deployment
+
+on:
+  push:
+  schedule:
+    - cron: '0 20 * * *'
+
+jobs:
+  deploy-and-wait:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/setup-kubectl@v1
+    - uses: azure/setup-helm@v1
+
+    - name: update the ingress + cert-manager yaml configs
+      run: ./scripts/_update_ingress_config.sh
+
+    - name: git status
+      run: |
+        if ! git diff --quiet || ! git diff --staged --quiet; then
+          echo "Detected untracked code changes:"
+          
+          echo "New stuff created by the previous script"
+          git status
+
+          echo "Changes..."
+          git diff
+
+          exit 1
+        else
+          echo "All good."
+        fi
+
+    - run: ./start.sh
+
+    - name: "wait for 'deployment.apps/nextcloud' to be ready"
+      run: kubectl wait --for=condition=available --timeout=600s deployment/nextcloud
+
+    - run: ./_kill_cluster.sh
+    

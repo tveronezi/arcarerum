@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CLUSTER_NAME=banana
+
+DEV_NEXTCLOUD_MARIADB_ROOT_PASSWORD="aksdhaksjdhakjhsdkha"
+DEV_NEXTCLOUD_MARIADB_REPLICATION_PASSWORD="asajsdakjhsd"
+DEV_NEXTCLOUD_MARIADB_PASSWORD="jhsgdjhagsdjhgasjghda"
+
+DEV_NEXTCLOUD_PASSWORD="akjshakjhsjkdhakjsdhkjashdkjahskjdhaksjhd"
+DEV_NEXTCLOUD_TOKEN="kjlsdajsdas"
+DEV_NEXTCLOUD_USERNAME="admin"

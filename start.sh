@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+cd scripts
+
 ./_kill_cluster.sh 
 ./_create_cluster.sh 
 ./_setup_ingress.sh 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./scripts/_env.sh
+source .env
 
 SECRET_NAME="nextcloud-secrets"
 

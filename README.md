@@ -1,6 +1,8 @@
 # arcarerum
 
-Check `_env.sh` for the required variables.
+Check `.env.sample` for the required variables.
+
+First `cp .env.sample .env` and update the values of the variables to your own. Then...
 
 ```bash
 ./start.sh

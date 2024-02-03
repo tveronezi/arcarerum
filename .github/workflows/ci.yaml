@@ -39,7 +39,11 @@ jobs:
           echo "All good."
         fi
 
-    - run: ./start.sh
+    - run: ./scripts/_kill_cluster.sh 
+    - run: ./scripts/_create_cluster.sh
+    - run: ./scripts/_setup_ingress.sh 
+
+    - run: ./deploy.sh
 
     - name: "wait for 'deployment.apps/nextcloud' to be ready"
       run: kubectl wait --for=condition=available --timeout=300s deployment/nextcloud

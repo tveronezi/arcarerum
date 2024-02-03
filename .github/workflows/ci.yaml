@@ -43,7 +43,17 @@ jobs:
     - run: ./scripts/_create_cluster.sh
     - run: ./scripts/_setup_ingress.sh 
 
-    - run: ./deploy.sh
+    - name: deploy mariadb
+      run: |
+        ./scripts/_create_nextcloud_mariadb_secret.sh 
+        ./scripts/_create_nextcloud_mariadb_volume.sh 
+        ./scripts/_deploy_nextcloud_mariadb.sh
+
+    - name: deploy nextcloud
+      run: |
+        ./scripts/_create_nextcloud_secret.sh 
+        ./scripts/_create_nextcloud_volume.sh 
+        ./scripts/_deploy_nextcloud.sh
 
     - name: "wait for 'deployment.apps/nextcloud' to be ready"
       run: kubectl wait --for=condition=available --timeout=300s deployment/nextcloud

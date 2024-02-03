@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source ./_env.sh
+source ./scripts/_env.sh
 kind delete cluster --name $CLUSTER_NAME

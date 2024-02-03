@@ -13,6 +13,7 @@ jobs:
     - uses: azure/setup-kubectl@v1
     - uses: azure/setup-helm@v1
 
+    - run: helm init
     - run: ./scripts/_setup_helm_repositories.sh
 
     - name: update the ingress + cert-manager yaml configs

@@ -5,7 +5,6 @@ phpClientHttpsFix:
   enabled: true
   protocol: https
 
-
 nextcloud:
   host: intra.veronezi.link
 
@@ -17,36 +16,36 @@ nextcloud:
     tokenKey: nextcloud-token
 
 internalDatabase:
-  enabled: true
+  enabled: false
   name: nextcloud
 
 ##
 ## External database configuration
 ##
 externalDatabase:
-  enabled: false
+  enabled: true
 
   ## Supported database engines: mysql or postgresql
   type: mysql
 
   ## Database host
-  host:
+  host: "nextcloud-mariadb:3306"
 
   ## Database user
-  user: nextcloud
+  user: root
 
   ## Database password
   password: ""
 
   ## Database name
-  database: nextcloud
+  database: my_database
 
   ## Use a existing secret
   existingSecret:
-    enabled: false
-    # secretName: nameofsecret
-    usernameKey: db-username
-    passwordKey: db-password
+    enabled: true
+    secretName: nextcloud-mariadb-secrets
+    usernameKey: mariadb-root-user
+    passwordKey: mariadb-root-password
     # hostKey: db-hostname-or-ip
     # databaseKey: db-name
 

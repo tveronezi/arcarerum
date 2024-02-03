@@ -13,6 +13,8 @@ jobs:
     - uses: azure/setup-kubectl@v1
     - uses: azure/setup-helm@v1
 
+    - run: ./scripts/_setup_helm_repositories.sh
+
     - name: update the ingress + cert-manager yaml configs
       run: ./scripts/_update_ingress_config.sh
 
@@ -37,5 +39,7 @@ jobs:
     - name: "wait for 'deployment.apps/nextcloud' to be ready"
       run: kubectl wait --for=condition=available --timeout=600s deployment/nextcloud
 
+    - run: ./scripts/_status.sh
+    - run: ./scripts/_status_all.sh
+    - run: ./scripts/_undeploy_nextcloud_mariadb.sh
     - run: ./_kill_cluster.sh
-    

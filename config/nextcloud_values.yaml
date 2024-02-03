@@ -6,7 +6,7 @@ phpClientHttpsFix:
   protocol: https
 
 nextcloud:
-  host: intra.veronezi.link
+  host: intra.localhost
 
   existingSecret:
     enabled: true

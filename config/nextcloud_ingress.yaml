@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "intra.veronezi.link"
+    - host: "intra.localhost"
       http:
         paths:
           - path: /

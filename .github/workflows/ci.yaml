@@ -49,4 +49,4 @@ jobs:
     - run: ./scripts/_undeploy_nextcloud_mariadb.sh
     - run: ./scripts/_undeploy_nextcloud.sh
     
-    - run: ./_kill_cluster.sh
+    - run: ./scripts/_kill_cluster.sh

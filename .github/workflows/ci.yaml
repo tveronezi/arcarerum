@@ -42,7 +42,7 @@ jobs:
     - run: ./start.sh
 
     - name: "wait for 'deployment.apps/nextcloud' to be ready"
-      run: kubectl wait --for=condition=available --timeout=900s deployment/nextcloud
+      run: kubectl wait --for=condition=available --timeout=300s deployment/nextcloud
 
     - run: ./scripts/_status.sh
     - run: ./scripts/_status_all.sh

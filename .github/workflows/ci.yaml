@@ -1,0 +1,53 @@
+name: test deployment
+
+on:
+  push:
+  schedule:
+    - cron: '0 20 * * *'
+
+jobs:
+  deploy-and-wait:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: azure/setup-kubectl@v3
+    - uses: azure/setup-helm@v3
+
+    - run: cp .env.sample .env
+    - run: ./scripts/_setup_helm_repositories.sh
+
+    - name: update the ingress + cert-manager yaml configs
+      run: ./scripts/_update_ingress_config.sh
+
+    - name: git status
+      run: |
+        if ! git diff --quiet || ! git diff --staged --quiet; then
+          echo "Detected untracked code changes:"
+          
+          echo "New stuff created by the previous script"
+          git status
+
+          echo "Changes..."
+          git diff
+
+          exit 1
+        else
+          echo "All good."
+        fi
+
+    - run: ./start.sh
+
+    - name: "wait for 'deployment.apps/nextcloud' to be ready"
+      run: kubectl wait --for=condition=available --timeout=300s deployment/nextcloud
+
+    - run: ./scripts/_status.sh
+    - run: ./scripts/_status_all.sh
+
+    - run: ./scripts/_undeploy_nextcloud_mariadb.sh
+    - run: ./scripts/_undeploy_nextcloud.sh
+    
+    - run: ./scripts/_kill_cluster.sh

@@ -1,2 +1,1 @@
-/volume/nextcloud-mariadb/*
-!/volume/nextcloud-mariadb/README.md
+.env

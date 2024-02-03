@@ -1,6 +1,0 @@
-#!/bin/bash
-
-CLUSTER_NAME=banana
-DEV_NEXTCLOUD_MARIADB_ROOT_PASSWORD="root_pass_banana"
-DEV_NEXTCLOUD_MARIADB_REPLICATION_PASSWORD="replication_pass_banana"
-DEV_NEXTCLOUD_MARIADB_PASSWORD="pass_banana"

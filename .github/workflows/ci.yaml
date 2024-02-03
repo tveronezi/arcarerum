@@ -39,6 +39,10 @@ jobs:
           echo "All good."
         fi
 
+    - run: ./scripts/_kill_cluster.sh 
+    - run: ./scripts/_create_cluster.sh
+    - run: ./scripts/_setup_ingress.sh 
+
     - run: ./start.sh
 
     - name: "wait for 'deployment.apps/nextcloud' to be ready"

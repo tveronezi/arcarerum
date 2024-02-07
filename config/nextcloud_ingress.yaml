@@ -2,10 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nextcloud-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "600m"
 spec:
   ingressClassName: nginx
   rules:
-    - host: "intra.localhost"
+    - host: "intra.company.com"
       http:
         paths:
           - path: /

@@ -173,7 +173,7 @@ resource "helm_release" "nextcloud" {
   chart      = "nextcloud"
   repository = "https://nextcloud.github.io/helm"
   namespace  = var.nextcloud_namespace
-  version    = "6.2.4"  
+  version    = "6.2.4"
 
   values = [
     yamlencode({

@@ -52,6 +52,14 @@ apply:
 # 	@set -e; \
 # 	(cd modules/nextcloud && terraform destroy -auto-approve)
 
+scaledown:
+	kubectl -n "${TF_VAR_nextcloud_namespace}" scale deployment nextcloud --replicas=0
+	kubectl -n "${TF_VAR_nextcloud_namespace}" scale statefulset nextcloud-mariadb --replicas=0
+
+scaleup:
+	kubectl -n "${TF_VAR_nextcloud_namespace}" scale deployment nextcloud --replicas=1
+	kubectl -n "${TF_VAR_nextcloud_namespace}" scale statefulset nextcloud-mariadb --replicas=1
+
 nextcloud-occ-fixes:
 	kubectl -n "${TF_VAR_nextcloud_namespace}" exec -c nextcloud -it deploy/nextcloud -- su -s /bin/bash www-data -c "php -d memory_limit=-1 /var/www/html/occ maintenance:repair --include-expensive"
 	kubectl -n "${TF_VAR_nextcloud_namespace}" exec -c nextcloud -it deploy/nextcloud -- su -s /bin/bash www-data -c "php -d memory_limit=-1 /var/www/html/occ db:add-missing-indices"

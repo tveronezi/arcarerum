@@ -64,6 +64,9 @@ nextcloud-occ-fixes:
 	kubectl -n "${TF_VAR_nextcloud_namespace}" exec -c nextcloud -it deploy/nextcloud -- su -s /bin/bash www-data -c "php -d memory_limit=-1 /var/www/html/occ maintenance:repair --include-expensive"
 	kubectl -n "${TF_VAR_nextcloud_namespace}" exec -c nextcloud -it deploy/nextcloud -- su -s /bin/bash www-data -c "php -d memory_limit=-1 /var/www/html/occ db:add-missing-indices"
 
+nextcloud-deck-import:
+	kubectl -n "${TF_VAR_nextcloud_namespace}" exec -c nextcloud -it deploy/nextcloud -- su -s /bin/bash www-data -c "php -d memory_limit=-1 /var/www/html/occ deck:import --help"
+
 fmt:
 	@for dir in $(DIRECTORIES); do \
 	  (cd $$dir && terraform fmt); \
